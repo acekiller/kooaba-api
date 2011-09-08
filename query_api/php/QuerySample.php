@@ -11,8 +11,8 @@
  */
 
 # Define user data provided by kooaba
-$access_key = "df8d23140eb443505c0661c5b58294ef472baf64";
-$secret_key = "054a431c8cd9c3cf819f3bc7aba592cc84c09ff7";
+$access_key = "<your access key>";
+$secret_key = "<your secret key>";
 $group_id = "32";
 
 # Query image
@@ -24,7 +24,7 @@ $img = file_get_contents($filename);
 # Connection data. Hostname, port number, and path
 $host = "search.kooaba.com";
 $port = "80";
-$path = "/groups/" . $group_id . "/queries.xml";
+$path = "/queries.xml";
 $content_type = "multipart/form-data";
 
 # Define timezone for RFC 2616 standards
@@ -42,6 +42,12 @@ $body .= 'Content-Disposition: form-data; name="query[file]"; filename="' . $fil
 $body .= 'Content-Transfer-Encoding: binary' ."\r\n";
 $body .= 'Content-Type: image/jpeg' . "\r\n\r\n";
 $body .= $img . "\r\n";
+# Group part begin
+$body .= "--" . $boundary . "\r\n";
+$body .= 'Content-Disposition: form-data; name="query[group_ids][]"'."\r\n\r\n";
+$body .= $group_id . "\r\n";
+# Group part end
+# To query multiple groups, append additional group parts (each with a single group ID)
 $body .= "--" . $boundary . "--\r\n";
 
 # Create the string to sign
