@@ -442,3 +442,72 @@ If the upload succeeds, you'll get an XML response back, telling you the ID of y
       <id>94cc5d8.2</id>
     </upload>
 
+
+### Item Resources
+
+For each item you can add generic URIs (links, URNs etc) or create file attachments. We call these information attached to an item "resources". These are then displayed in the response for your search requests matching the item. 
+
+For file attachments, just as with image uploads documented above, you first have to create an upload and then use this API and set resource[file][upload_id] to the upload id (same as when adding an image to an item).
+
+**Request**
+    
+    POST /api/items/:id/item_resources.xml
+
+
+#### Input
+        
+Required:
+
+_resource[title]_ The title of the resource
+_resource[section]_ The section in which it should appear
+
+One of the two following is also required:
+
+_resource[uri]_ A generic uri (such as http://domain.tld or scheme://path etc)
+        
+or
+
+_resource[file][upload_id]_ An upload id (see the public data API).
+        
+**Response**
+
+    Status: 201 Created
+
+
+### Medium Types
+
+Items can have a Medium object assigned to them. This defines the kind of item. For instance, a Wine, a Book Cover, a Newspaper page, etc. Specifying the Medium helps the recognition engine to optimize certain parameters which are optimized for the kind of item. Furthermore, it allows you to set Medium specific meta-data fields. For example the author of a book, or the vintage of a wine. We need to configure the available Medium Types for your group, so please contact us if you want to make use of this feature. (The specific attributes available for a certain Medium Type can be seen when adding a new item using the Web upload in your account under my.kooaba.com/admin). The available Medium Types are:  
+
+    Book                Book Cover
+    DVD                 DVD Cover
+    Game                Game Cover
+    Movie               Movie Poster
+    Album               CD Cover
+    Ad                  Print Advertising
+    BillboardPoster     Billboard    
+    ConferencePoster    Scientific Poster
+    Art                 Piece of Art (painting etc.)
+    PeriodicalPage      Page in a Newspaper or Magazine
+    CataloguePage       Page in a printed Catalogue     
+    Wine                A wine label
+    Postcard            A Postcard
+
+#### Create Medium
+
+Parameters are
+
+    medium[type]    The medium type, one of PeriodicalPage, Movie, DVD etc.
+    medium[title]   Can be the same as item[title]. Must be present here as well.
+    medium[*]       Specific attributes for the medium (example: periodical_page, periodical_issue for a PeriodicalPage)
+
+Pass an empty medium object (<medium></medium>) to remove the medium type from the item.
+
+**Request**
+  
+    PUT /api/items/:id/medium.xml
+    
+**Response**
+
+    Status: 204 No Content
+
+
