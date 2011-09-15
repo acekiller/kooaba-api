@@ -442,6 +442,7 @@ If the upload succeeds, you'll get an XML response back, telling you the ID of y
       <id>94cc5d8.2</id>
     </upload>
 
+---
 
 ### Item Resources
 
@@ -452,27 +453,25 @@ For file attachments, just as with image uploads documented above, you first hav
 **Request**
     
     POST /api/items/:id/item_resources.xml
-
-
-#### Input
         
-Required:
+Required Parameters:
 
-_resource[title]_ The title of the resource
-_resource[section]_ The section in which it should appear
+    resource[title] The title of the resource
+    resource[section]  The section in which it should appear
 
 One of the two following is also required:
 
-_resource[uri]_ A generic uri (such as http://domain.tld or scheme://path etc)
+    resource[uri] A generic uri (such as http://domain.tld or scheme://path etc)
         
 or
 
-_resource[file][upload_id]_ An upload id (see the public data API).
+    resource[file][upload_id] An upload id (see the public data API).
         
 **Response**
 
     Status: 201 Created
 
+---
 
 ### Medium Types
 
@@ -500,7 +499,7 @@ Parameters are
     medium[title]   Can be the same as item[title]. Must be present here as well.
     medium[*]       Specific attributes for the medium (example: periodical_page, periodical_issue for a PeriodicalPage)
 
-Pass an empty medium object (<medium></medium>) to remove the medium type from the item.
+Pass an empty medium object (`<medium></medium>`) to remove the medium type from the item.
 
 **Request**
   
