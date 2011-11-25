@@ -448,24 +448,30 @@ If the upload succeeds, you'll get an XML response back, telling you the ID of y
 
 For each item you can add generic URIs (links, URNs etc) or create file attachments. We call these information attached to an item "resources". These are then displayed in the response for your search requests matching the item. 
 
-For file attachments, just as with image uploads documented above, you first have to create an upload and then use this API and set resource[file][upload_id] to the upload id (same as when adding an image to an item).
+For file attachments, just as with image uploads documented above, you first have to create an upload and then use this API and set resource/file/upload_id to the upload id (same as when adding an image to an item).
 
 **Request**
     
     POST /api/items/:id/item_resources.xml
+
+    <resource>
+      <title>Wikipedia</title>
+      <section>Links</section>
+      <uri>http://wikipedia.org</uri>
+    </resource>
         
 Required Parameters:
 
-    resource[title] The title of the resource
-    resource[section]  The section in which it should appear
+    title    The title of the resource
+    section  The section in which it should appear
 
 One of the two following is also required:
 
-    resource[uri] A generic uri (such as http://domain.tld or scheme://path etc)
+    uri A generic uri (such as http://domain.tld or scheme://path etc)
         
 or
 
-    resource[file][upload_id] An upload id (see the public data API).
+    file/upload_id An upload id (see the public data API).
         
 **Response**
 
@@ -495,15 +501,21 @@ Items can have a Medium object assigned to them. This defines the kind of item. 
 
 Parameters are
 
-    medium[type]    The medium type, one of PeriodicalPage, Movie, DVD etc.
-    medium[title]   Can be the same as item[title]. Must be present here as well.
-    medium[*]       Specific attributes for the medium (example: periodical_page, periodical_issue for a PeriodicalPage)
+    type    The medium type, one of PeriodicalPage, Movie, DVD etc.
+    title   Can be the same as item[title]. Must be present here as well.
+    *       Specific attributes for the medium (example: periodical_page, periodical_issue for a PeriodicalPage)
 
 Pass an empty medium object (`<medium></medium>`) to remove the medium type from the item.
 
 **Request**
   
     PUT /api/items/:id/medium.xml
+
+    <medium>
+      <type>Medium::Art</type>
+      <title>Mona Lisa</title>
+      <artist>Leonardo da Vinci</artist>
+    </medium>
     
 **Response**
 
