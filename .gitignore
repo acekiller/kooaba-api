@@ -1,2 +1,7 @@
-*.pbxuser
-*.mode1v3
+.*.sw?
+.#*
+*~
+*.bak
+*.bkp
+*.pyc
+__pycache__
