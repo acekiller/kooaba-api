@@ -19,7 +19,6 @@ Items can have a Medium object assigned to them. This defines the kind of item. 
 
 Optional and mandatory fields of the Medium Types are listed in the sections below. Some of the fields can be addressed by multiple names, in which case the alternative fields are listed in brackets. The default field type is string with limit of 255 characters. Other field types are marked explicitly in curly brackets (e.g. `{integer}`), optionally with size limit (e.g. `{string(16)}`).
 
----
 
 ## Ad
 
@@ -35,7 +34,6 @@ Optional fields:
     start_date  {date}
     type
 
----
 
 ## Album
 
@@ -52,7 +50,6 @@ Optional fields:
     released_on (releasedate)  {date}
     salesrank  {integer}
 
----
 
 ## Art
 
@@ -65,7 +62,6 @@ Optional fields:
 
     year  {integer}
 
----
 
 ## BillboardPoster
 
@@ -84,7 +80,6 @@ Optional fields:
     start_date  {date}
     type
 
----
 
 ## Book
 
@@ -100,7 +95,6 @@ Optional fields:
     published_on (releasedate)  {date}
     publisher
 
----
 
 ## CataloguePage
 
@@ -114,7 +108,6 @@ Optional fields:
     number  {integer}
     published_on  {date}
 
----
 
 ## ConferencePoster
 
@@ -130,7 +123,6 @@ Optional fields:
     organisation
     title
 
----
 
 ## DVD
 
@@ -146,7 +138,6 @@ Optional fields:
     released_on (releasedate)  {date}
     salesrank  {integer}
 
----
 
 ## Game
 
@@ -160,7 +151,6 @@ Optional fields:
     released_on (releasedate)  {date}
     locale
 
----
 
 ## Movie
 
@@ -172,7 +162,6 @@ Optional fields:
 
     released_on  {date}
 
----
 
 ## PeriodicalPage
 
@@ -192,7 +181,6 @@ Optional fields:
     periodical_volume  {integer}
     published_on  {date}
 
----
 
 ## Postcard
 
@@ -202,7 +190,6 @@ Mandatory fields:
     title
     year  {integer}
 
----
 
 ## Wine
 

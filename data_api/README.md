@@ -481,7 +481,7 @@ or
 
 ### Medium Types
 
-Items can have a Medium object assigned to them. This defines the kind of item. For instance, a Wine, a Book Cover, a Newspaper page, etc. Specifying the Medium helps the recognition engine to optimize certain parameters which are optimized for the kind of item. Furthermore, it allows you to set Medium specific meta-data fields. For example the author of a book, or the vintage of a wine. We need to configure the available Medium Types for your group, so please contact us if you want to make use of this feature. (The specific attributes available for a certain Medium Type [can be seen here](Medium_Types.md) or when adding a new item using the Web upload in your account under my.kooaba.com/admin). The available Medium Types are:  
+Items can have a Medium object assigned to them. This defines the kind of item. For instance, a Wine, a Book Cover, a Newspaper page, etc. Specifying the Medium helps the recognition engine to optimize certain parameters which are optimized for the kind of item. Furthermore, it allows you to set Medium specific meta-data fields. For example the author of a book, or the vintage of a wine. We need to configure the available Medium Types for your group, so please contact us if you want to make use of this feature. (The specific attributes available for a certain Medium Type [can be seen here](./Medium_Types.md) or when adding a new item using the Web upload in your account under my.kooaba.com/admin). The available Medium Types are:  
 
     Book                Book Cover
     DVD                 DVD Cover
