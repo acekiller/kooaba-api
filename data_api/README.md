@@ -467,11 +467,11 @@ Required Parameters:
 
 One of the two following is also required:
 
-    uri A generic uri (such as http://domain.tld or scheme://path etc)
+    uri      A generic uri (such as http://domain.tld or scheme://path etc)
         
 or
 
-    file/upload_id An upload id (see the public data API).
+    file/upload_id  An upload id (see the public data API).
         
 **Response**
 
