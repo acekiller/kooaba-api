@@ -213,7 +213,7 @@ class BasicDataUploadClient:
     def _add_xml_subelement(self, root, name, text):
         """ Add a text sub-element to root. """
         elem = ET.SubElement(root, name)
-        elem.text = str(text)
+        elem.text = unicode(text, "UTF-8")
 
     def _element_from_xml(self, xml, name):
         """ Extract element name from supplied XML string.
@@ -326,13 +326,10 @@ class BasicDataUploadClient:
         """ Serialize ElementTree document. """
         tree = ET.ElementTree(xml)
         buf = StringIO()
-        tree.write(buf)
+        tree.write(buf, encoding="UTF-8", xml_declaration=True, method="xml")
         serialized = buf.getvalue()
         buf.close()
-        if not serialized.startswith('<?xml'):
-            return "<?xml version='1.0' encoding='UTF-8'?>\n"+serialized
-        else:
-            return serialized
+        return serialized
 
     def _set_image_status(self, image_id, new_status):
         """ Set image status to a new value.
