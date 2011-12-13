@@ -29,8 +29,8 @@ import org.apache.http.util.CharArrayBuffer;
  * Uses httpclient 4.x.
  * Contact: support@kooaba.com
  * 
- * @version 2010-12-02
- * @authors Joachim Fornallaz, Franco Sebregondi
+ * @version 2011-12-13
+ * @authors Joachim Fornallaz, Franco Sebregondi, Peter Cech
  */
 public class QuerySample {
 
@@ -107,7 +107,8 @@ public class QuerySample {
 			// Prepare the HTTP method
 	        HttpPost queryPost = new HttpPost(apiAddress);
 	        queryPost.setEntity(reqEntity);
-	        queryPost.addHeader("Date", DateUtils.formatDate(new Date()));
+	        // older DateUtils (e.g. on Android) generate "GMT+00:00" instead of RFC-compliant "GMT"
+	        queryPost.addHeader("Date", DateUtils.formatDate(new Date()).replaceFirst("[+]00:00$", ""));
 	        queryPost.addHeader("Authorization", "KWS " + accessKey + ":" + kwsSignature(queryPost));
 
 	        // Execute the method
