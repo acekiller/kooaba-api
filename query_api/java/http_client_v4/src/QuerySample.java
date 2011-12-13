@@ -34,9 +34,10 @@ import org.apache.http.util.CharArrayBuffer;
  */
 public class QuerySample {
 
-	public static String accessKey = "df8d23140eb443505c0661c5b58294ef472baf64";
-	public static String secretKey = "054a431c8cd9c3cf819f3bc7aba592cc84c09ff7";
-	public static String apiAddress = "http://search.kooaba.com/groups/{group_id}/queries.xml";
+	public static String accessKey = "<your access key>";
+	public static String secretKey = "<your secret key>";
+	public static String apiAddress = "http://search.kooaba.com/queries.xml";
+	public static int[] groupIds = { 32 };
 	private String sourceFile;
 
 	/**
@@ -89,8 +90,7 @@ public class QuerySample {
 	}
 	 
 	private void run() {
-		String targetURL = apiAddress.replaceFirst("\\{group_id\\}", "32");
-		System.out.println(targetURL);
+		System.out.println(apiAddress);
 		try {
 			// Prepare content body
 			File targetFile = new File(sourceFile);
@@ -99,9 +99,13 @@ public class QuerySample {
 			MultipartEntity reqEntity = new MultipartEntity();
 			reqEntity.addPart("query[file]", imagePart);
 	        reqEntity.addPart("query[bounding_box]", boundingBoxPart);
+		for (int group : groupIds) {
+			StringBody groupPart = new StringBody(""+group);
+			reqEntity.addPart("query[group_ids][]", groupPart);
+		}
 
 			// Prepare the HTTP method
-	        HttpPost queryPost = new HttpPost(targetURL);
+	        HttpPost queryPost = new HttpPost(apiAddress);
 	        queryPost.setEntity(reqEntity);
 	        queryPost.addHeader("Date", DateUtils.formatDate(new Date()));
 	        queryPost.addHeader("Authorization", "KWS " + accessKey + ":" + kwsSignature(queryPost));
@@ -110,7 +114,7 @@ public class QuerySample {
 	        ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			HttpClient client = new DefaultHttpClient();
 	        String responseBody = client.execute(queryPost, responseHandler);
-	        
+
 	        // Debugging output
 			Header[] headers = queryPost.getAllHeaders();
 			System.out.println("Headers:");
