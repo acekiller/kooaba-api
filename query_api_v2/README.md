@@ -21,6 +21,7 @@ The Beta version is primarily intended for interfacing with development and test
 ## Forward and Backward Compatibility
 
 The Query API v2 is designed to be extensible. The future revisions will bring additional features, but will not remove or break behavior of previous revisions of the API. This allows clients created against older revisions of the API to function normally as long as they follow these basic guidelines:
+
 * Do not include unknown values. Unless explicitly stated in this documentation, unknown values are silently ignored. Future revisions might define meaning for these values which can break the response (this is not an API breaking behavior as the defaults for new options are always backward compatible).
 * Do not rely on ordering of the data elements in the response. Unless explicitly stated otherwise, the ordering of the data elements is arbitrary and there are no guarantees to stay the same even between two consecutive but identical requests. This holds both for objects (also known as maps or hashes) and for arrays.
 
@@ -42,6 +43,7 @@ We would like to see the extension process to be driven by you - our API users. 
 ### Discrepancies between documentation and implementation
 
 As they say, to err is human and the API developers are mere humans, so sooner or later there will be a bug or inconsistency between what was meant and what happened. The preferred solution is to follow the documentation if possible, but there are few cases when the documentation will be fixed instead of the implementation:
+
 * Fix would not be compatible and
  * the implementation is in heavy use
  * timely API client software upgrade is not possible or too complex to execute
@@ -54,6 +56,7 @@ The discovered bugs will be documented in **Known Bugs** and the fixes will be d
 ## Performing a Query
 
 To perform a query you'll need following:
+
 * Image in a JPEG or PNG format, maximum 3Mpix and no more than 2MB in size
  * JPEG must be either grayscale or in RGB colorspace, 8bit per pixel channel
  * PNG must be a grayscale, palleted or RGB (i.e. no alpha channel), 8bit per color channel
@@ -61,8 +64,10 @@ To perform a query you'll need following:
 * Software to communicate with the Query API v2 (you can use the example code in this repository)
 
 Although both JPEG and PNG image formats with resolutions up to 3Mpix are accepted, optimizing image parameters for query can speed up recognition response times while keeping high recognition quality. These two settings are recommended for purposes of image matching:
+
 * **WiFi:** JPEG format, compression quality 75 (on libjpeg scale 1..100), longer side of the image is 640 pixels (also known as VGA resolution). Image file size is around 65kiB, depending on the image content.
 * **Mobile networks:** JPEG format, compression quality 30 (on libjpeg scale 1..100), longer side of the image is 320 pixels (also known as QVGA resolution). Image file size is around 15kiB, depending on the image content. Recognition rate on a challenging data set is only 4% lower than with the WiFi settings. Increasing the quality to 50 yields image size around 18kB and the recognition rate is less than 2% worse than the mentioned baseline.
+
 Image matching supports grayscale input images without loss of recognition rate which allows further reduction of query file size.
 
 The credentials are used to sign the request set to the API. The signing procedure is described in the [documentation](https://github.com/kooaba/kooaba-api/tree/master/authentication).
@@ -74,6 +79,7 @@ The software should generate a signed HTTP query request in accordance to the do
 ## Request Specification
 
 Definitions:
+
 * Destination
  * Identifies a partition of recognizable content. Currently a group number.
 * Boolean flag
@@ -89,6 +95,7 @@ Definitions:
   * https://query-beta.kooaba.com
 
 The query request is a `POST` request to path `/v2/query` to the endpoint with `multipart/form-data` payload. It is recommended to set the `Accept` header of the request to `application/json`. Authentication and request signature is performed via a KWS header (the algorithm is common for all kooaba APIs and is detailed in https://github.com/kooaba/kooaba-api/tree/master/authentication). Request size limit is 2MB for the request body. Each field can occur only once. Multiple occurrence of a field in the request leads to undefined behavior. The field names are case sensitive. Any unknown fields are ignored. Standard fields are:
+
 * `image`
  * Mandatory
  * Image in binary encoding. Only JPEG and PNG formats are accepted. The resolution must be 3Mpix or less.
@@ -131,6 +138,7 @@ Accept-Encoding: gzip;q=1.0, identity; q=0.5, *;q=0
 ## Response Specification
 
 The response is in a JSON format. There are two top level nodes inside of the anonymous root object:
+
 * `results`
  * Always present
  * Contains an array of results sorted by recognition quality (highest quality first).
@@ -144,6 +152,7 @@ The following sections will describe building blocks of the result (some are opt
 
 ### Basic result entry
 The minimal result entry contains:
+
 * `id`
  * ID of the recognized object.
  * The ID is structured as type:value where the type indicates what kind of recognition produced the result and the value is an unique ID for what was recognized. The actual interpretation of the value is type dependent. The type is hierarchical with subtype separated by a dot (e.g. `image.sha1`). Subtypes can be chained.
@@ -158,6 +167,7 @@ The minimal result entry contains:
 
 ### Recognized area specification
 The corners are specified by x and y coordinates (floating point numbers).
+
 * `bounding_box`
  * Indicates area on the query image responsible for the result (e.g. which part of the query image matched the reference image)
  * Bounding box is specified by four corners (upper right first, then clockwise). Each corner is specified by x and y coordinates. Values are in pixel coordinates.
@@ -168,6 +178,7 @@ The corners are specified by x and y coordinates (floating point numbers).
 
 ### External references
 There are two possible external references:
+
 * `external_id`
  * Numeric (integer) ID.
 * reference_id
@@ -176,6 +187,7 @@ There are two possible external references:
 
 ### Minimal human readable description
 The minimal human readable metadata for image matching (`image.sha1` ID type) are:
+
 * `type`
  * Media type of the recognized object (e.g. book)
 * `title`
@@ -188,6 +200,7 @@ Arbitrary amount of metadata entries grouped under `extended` node. The entries 
 
 ### Resources metadata
 Item resource metadata associated with the recognition. It is an array node named `resources`. Each entry consists of:
+
 * `title`
  * Title for the metadata entry.
 * `section`
@@ -206,6 +219,7 @@ As mentioned above, the result ID value is prefixed with a type identifier. This
 
 ### Full response example
 The response was formatted for readability.
+
 ```
 {
   "results":
