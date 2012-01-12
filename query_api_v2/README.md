@@ -1,6 +1,6 @@
 # Query API v2 (Beta)
 
-Revision 2011-12-14.
+Revision 2012-01-12.
 
 
 
@@ -94,7 +94,7 @@ Definitions:
   * http://query-beta.kooaba.com
   * https://query-beta.kooaba.com
 
-The query request is a `POST` request to path `/v2/query` to the endpoint with `multipart/form-data` payload. It is recommended to set the `Accept` header of the request to `application/json`. Authentication and request signature is performed via a KWS header (the algorithm is common for all kooaba APIs and is detailed in https://github.com/kooaba/kooaba-api/tree/master/authentication). Request size limit is 2MB for the request body. Each field can occur only once. Multiple occurrence of a field in the request leads to undefined behavior. The field names are case sensitive. Any unknown fields are ignored. Standard fields are:
+The query request is a `POST` request to path `/v2/query` to the endpoint with `multipart/form-data` payload. It is required to set the `Accept` header of the request to `application/json`. Authentication and request signature is performed via a KWS header (the algorithm is common for all kooaba APIs and is detailed in https://github.com/kooaba/kooaba-api/tree/master/authentication). Request size limit is 2MB for the request body. Each field can occur only once. Multiple occurrence of a field in the request leads to undefined behavior. The field names are case sensitive. Any unknown fields are ignored. Standard fields are:
 
 * `image`
  * Mandatory
@@ -292,3 +292,4 @@ None so far.
 ## Changelog
 
 * 2012-01-11 Initial public release
+* 2011-01-12 Clarification: The `Accept` HTTP header is mandatory.
