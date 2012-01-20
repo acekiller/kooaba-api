@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Demo Application for the kooaba Image Recognition platform</string>
+    <string name="app_name">KooabaDemo</string>
+    <string name="welcome__destinations">Destinations</string>
+    <string name="welcome__resolution_quality">Resolution@Quality</string>
+    <string name="welcome__take_picture">Take Picture</string>
+    <string name="welcome_description__kooaba_logo">kooaba image recognition logo</string>
+    <string name="results__query_image_size">Query Image Size:  </string>
+    <string name="results__status">Status:  </string>
+    <string name="results__recognition_time">Recognition Time:  </string>
+    <string name="results__response">Response:  </string>
+</resources>

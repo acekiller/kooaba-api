@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#272727">
+
+    <ImageView
+        android:id="@+id/logo_image_view"
+        android:layout_width="fill_parent"
+        android:layout_height="140dp"
+        android:contentDescription="@string/welcome_description__kooaba_logo"
+        android:padding="30dp"
+        android:src="@drawable/kooaba_logo" />
+
+    <TextView  
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" 
+        android:text="@string/hello"
+        android:paddingTop="10dp"
+        android:paddingBottom="20dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp" />
+    
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dip" >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dip"
+                android:layout_weight="1"
+                android:text="@string/welcome__destinations" />
+
+            <EditText
+                android:id="@+id/destinations"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="25dip"
+                android:layout_weight="1"
+                android:inputType="textNoSuggestions" >
+
+                <requestFocus />
+            </EditText>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dip"
+                android:layout_weight="1"
+                android:text="@string/welcome__resolution_quality" />
+
+            <EditText
+                android:id="@+id/query_settings"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="25dip"
+                android:layout_weight="1"
+                android:inputType="textEmailAddress" >
+
+                <requestFocus />
+            </EditText>
+
+        </TableRow>
+
+    </TableLayout>
+        
+    <LinearLayout
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent"
+        android:orientation="horizontal" 
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/preview_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="@string/welcome__take_picture" />
+
+  </LinearLayout>
+</LinearLayout>
