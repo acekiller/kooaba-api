@@ -127,6 +127,18 @@ The query request is a `POST` request to path `/v2/query` to the endpoint with `
   * `extended` – Medium specific metadata.
   * `resources` – Resource metadata associated with the recognition.
  * Recognition ID and recognition quality metadata are always returned.
+* `resource-sorting`
+ * Optional, defaults to an empty list
+ * List of stable sorting passes to perform on the item resources. Supported values are:
+  * `creation-time` – Sort to order in which the resources were created.
+  * `position` – Sort according to the resource position.
+   * At the time of writing, the Data API does not support setting or changing the position.
+  * `section` – Group the resources by section. The sections are ordered lexicographically (see the note).
+ * **Note:** The server does not support alphabetical sorting by section or title because such sorting is locale specific. Sorting on the client is preferable as the client already supports the required locale, even if it is one of the exotic ones.
+* `resource-uploads`
+ * Optional, defaults to an empty string
+ * Specifies details on how to handle resource uploads. Supported values are:
+  * `expires-in=T` – Set the expiration time of the pre-signed URLs to T seconds.
 
 The response can be compressed to reduce amount of transferred data by specifying gzip as preferred encoding. This is done by setting the `Accept-Encoding` header of the request to e.g.:
 ```
@@ -206,9 +218,11 @@ Item resource metadata associated with the recognition. It is an array node name
 * `section`
  * Section this entry belongs to.
 * `uri`
- * URI for the resource metadata entry. If the entry describes a file upload, it will be a pre-signed URL. The default validity of the pre-signed URL is 3600 seconds.
+ * URI for the resource metadata entry. If the entry describes a file upload, it will be a pre-signed URL. The default validity of the pre-signed URL is 3600 seconds, but can be changed using the `resource-uploads` field of the request.
 * `content_type`
  * Content type of the uploaded file (if the entry describes a file upload).
+
+The array is unordered by default, but if the `resource-sorting` request option was specified, the resources are sorted according to the criteria from the option.
 
 
 ### Result ID type prefix
@@ -292,4 +306,5 @@ None so far.
 ## Changelog
 
 * 2012-01-11 Initial public release
-* 2011-01-12 Clarification: The `Accept` HTTP header is mandatory.
+* 2012-01-12 Clarification: The `Accept` HTTP header is mandatory.
+* 2012-02-21 Added resource sorting request option. Added option for setting signature expiration for resource uploads.

@@ -200,10 +200,7 @@ class QueryRequest(SimpleMultipartRequest):
         """ Set query destinations.
         None or empty string are equivalent to listing all user's destinations.
         """
-        if (destinations is None) or (destinations == ''):
-            self.remove_part('destinations')
-        else:
-            self.set_part('destinations', destinations)
+        self._set_or_remove_part('destinations', destinations)
 
     def set_early_return(self, early_return_flag):
         """ Set early return flag on the query.
@@ -252,11 +249,32 @@ class QueryRequest(SimpleMultipartRequest):
             extended: extended metadata
             resources: resources metadata
         """
-        name = 'returned-metadata'
-        if (specification is None) or (specification == ''):
-            self.remove_part(name)
+        self._set_or_remove_part('returned-metadata', specification);
+
+    def set_resource_sorting(self, specification):
+        """ Set the way to sort the returned resources.
+        Comma separated list of sorting criteria. Each entry in the list
+        performs a stable sort according to the sorting criterion. Currently
+        supported values are:
+            creation-time: sort in order of creation of the resources
+            position: sort according to the position
+            section: group resources according to the sections
+        """
+        self._set_or_remove_part('resource-sorting', specification)
+
+    def set_resource_uploads_handling(self, specification):
+        """ Set handling details of uploaded resources.
+        Currently supported values:
+            expires-in=T: the pre-signed URLs expire in T seconds
+        """
+        self._set_or_remove_part('resource-uploads', specification)
+
+    def _set_or_remove_part(self, part_name, content):
+        """ Set or remove (if content is None) the given request part. """
+        if (content is None) or (content == ''):
+            self.remove_part(part_name)
         else:
-            self.set_part(name, specification)
+            self.set_part(part_name, content)
 
 
 class QueryResponse:
@@ -336,10 +354,14 @@ def parse_inputs():
             help = "endpoint for query requests (0 means unlimited) [%default]")
     parser.add_option('-l', '--low-confidence-results', type = 'string', default = '',
             help = "set return 'low confidence results' query option, should be one of 'always', 'as-needed' (or empty string), 'never' [%default]")
-    parser.add_option('-m', '--returned-metadata', type = 'string', default = 'recognition-location,external-references,minimal,extended,resources,reference-image',
+    parser.add_option('-m', '--returned-metadata', type = 'string', default = 'recognition-location,external-references,minimal,extended,resources',
             help = "set what metadata should be returned (consult API documentation for details) [%default]")
     parser.add_option('-r', '--results-limit', type = 'int', default = RESULTS_LIMIT, metavar = 'LIMIT',
             help = "set limit on number of returned results [%default]")
+    parser.add_option('-s', '--resource-sorting', type = 'string', default = '',
+            help = "comma separated list of sort criteria [%default]")
+    parser.add_option('-u', '--resource-uploads', type = 'string', default = '',
+            help = "how to handle resource uploads [%default]")
     #parser.add_option('-v', '--verbose', action = 'store_true', default = False,
     #        help = "verbose logging - DEBUG logging level [%default]")
 
@@ -420,6 +442,8 @@ def main():
     request.set_return_low_confidence_results(options.low_confidence_results)
     request.set_results_limit(options.results_limit)
     request.set_returned_metadata(options.returned_metadata)
+    request.set_resource_sorting(options.resource_sorting)
+    request.set_resource_uploads_handling(options.resource_uploads)
 
     response = client.execute(request)
     retval = 0
