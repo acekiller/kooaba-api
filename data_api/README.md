@@ -7,6 +7,8 @@ The kooaba data API provides the ability to manage content in kooaba's image rec
 It is implemented as a [RESTful](http://en.wikipedia.org/wiki/Representational_State_Transfer) web service using XML data over HTTP and allows to add and remove
 images, as well as their associated meta data. Images that have been uploaded via the Data API are then available for recognition via the Query API.
 
+There is also a blogpost, which describes how to get started with the Python script we provide as a sample: http://blog.kooaba.com/2011/12/upload-api-the-easy-way/
+
 ## Data Model
 
 The recognition system is organized into groups, items, images and item-resources. API users are member
