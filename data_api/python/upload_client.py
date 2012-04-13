@@ -326,7 +326,12 @@ class BasicDataUploadClient:
         """ Serialize ElementTree document. """
         tree = ET.ElementTree(xml)
         buf = StringIO()
-        tree.write(buf, encoding="UTF-8", xml_declaration=True, method="xml")
+        try:
+            # ElementTree 1.3
+            tree.write(buf, encoding="UTF-8", xml_declaration=True, method="xml")
+        except:
+            # older ElementTree version
+            tree.write(buf, encoding="UTF-8")
         serialized = buf.getvalue()
         buf.close()
         return serialized
